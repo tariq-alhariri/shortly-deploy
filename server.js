@@ -1,6 +1,6 @@
 var app = require('./server-config.js');
-//process.env.PORT//
-var port =  8080 ;
+
+var port = process.env.PORT ;
  
 app.listen(port);
 
