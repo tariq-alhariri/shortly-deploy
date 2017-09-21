@@ -3,6 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+          options: {
+      separator: ';',
+    },
+    dist: {
+      src: ['app/**/*.js', 'app/*.js'],
+      dest: 'built.js',
+    },
     },
 
     mochaTest: {
@@ -21,15 +28,25 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      dist:{
+        files:{
+          'public/build.js':['app/**/*.js', 'app/*.js']
+        }
+      }
     },
 
     eslint: {
       target: [
-        // Add list of files to lint here
+        'app/**/*.js', 'app/*.js'
       ]
     },
 
     cssmin: {
+      combine:{
+        files:{
+          'public/stylessss.css':['public/*.css']
+        }
+      }
     },
 
     watch: {
@@ -75,15 +92,15 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'mochaTest'
   ]);
-
+grunt.registerTask('default', ["uglify","cssmin"]);
   grunt.registerTask('build', [
   ]);
-
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
     } else {
       grunt.task.run([ 'server-dev' ]);
+      // grunt.tstk.run(['build']);
     }
   });
 
